@@ -2,11 +2,13 @@ package com.kilobolt.gameworld;
 
 import com.kilobolt.gameobjects.Bird;
 import com.kilobolt.gameobjects.ScrollHandler;
+import com.kilobolt.zbhelpers.AssetLoader;
 
 public class GameWorld {
 
     private Bird bird;
     private ScrollHandler scroller;
+    private boolean isAlive = true;
 
     public GameWorld(int midPointY) {
         bird = new Bird(33, midPointY - 5, 17, 12);
@@ -15,12 +17,14 @@ public class GameWorld {
     }
 
     public void update(float delta) {
+
         bird.update(delta);
         scroller.update(delta);
 
-        if (scroller.collides(bird)) {
-            // Clean up on game over
+        if (scroller.collides(bird) && isAlive) {
             scroller.stop();
+            AssetLoader.dead.play();
+            isAlive = false;
         }
     }
 
