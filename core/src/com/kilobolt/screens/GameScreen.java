@@ -2,7 +2,6 @@ package com.kilobolt.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.kilobolt.gameworld.GameRenderer;
 import com.kilobolt.gameworld.GameWorld;
 
@@ -11,10 +10,19 @@ public class GameScreen implements Screen {
     private GameWorld world;
     private GameRenderer renderer;
 
+    // This is the constructor, not the class declaration
     public GameScreen() {
-        Gdx.app.log("GameScreen", "Attached");
-        world = new GameWorld();
+
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float gameWidth = 136;
+        float gameHeight = screenHeight / (screenWidth / gameWidth);
+
+        int midPointY = (int) (gameHeight / 2);
+
+        world = new GameWorld(midPointY);
         renderer = new GameRenderer(world);
+
     }
 
     @Override
