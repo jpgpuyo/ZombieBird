@@ -12,7 +12,6 @@ public class GameScreen implements Screen {
     private GameRenderer renderer;
     private float runTime;
 
-    // This is the constructor, not the class declaration
     public GameScreen() {
 
         float screenWidth = Gdx.graphics.getWidth();
@@ -24,7 +23,9 @@ public class GameScreen implements Screen {
         world = new GameWorld(midPointY);
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / gameWidth, screenHeight / gameHeight));
         renderer = new GameRenderer(world, (int) gameHeight, midPointY);
+        world.setRenderer(renderer);
     }
+
 
     @Override
     public void render(float delta) {
