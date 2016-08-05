@@ -25,6 +25,22 @@ public class ScrollHandler {
                 yPos);
     }
 
+    public void updateReady(float delta) {
+
+        frontGrass.update(delta);
+        backGrass.update(delta);
+
+        // Same with grass
+        if (frontGrass.isScrolledLeft()) {
+            frontGrass.reset(backGrass.getTailX());
+
+        } else if (backGrass.isScrolledLeft()) {
+            backGrass.reset(frontGrass.getTailX());
+
+        }
+
+    }
+
     public void update(float delta) {
         // Update our objects
         frontGrass.update(delta);
@@ -60,14 +76,6 @@ public class ScrollHandler {
         pipe1.stop();
         pipe2.stop();
         pipe3.stop();
-    }
-
-    public void onRestart() {
-        frontGrass.onRestart(0, SCROLL_SPEED);
-        backGrass.onRestart(frontGrass.getTailX(), SCROLL_SPEED);
-        pipe1.onRestart(210, SCROLL_SPEED);
-        pipe2.onRestart(pipe1.getTailX() + PIPE_GAP, SCROLL_SPEED);
-        pipe3.onRestart(pipe2.getTailX() + PIPE_GAP, SCROLL_SPEED);
     }
 
     public boolean collides(Bird bird) {
@@ -120,6 +128,14 @@ public class ScrollHandler {
 
     public Pipe getPipe3() {
         return pipe3;
+    }
+
+    public void onRestart() {
+        frontGrass.onRestart(0, SCROLL_SPEED);
+        backGrass.onRestart(frontGrass.getTailX(), SCROLL_SPEED);
+        pipe1.onRestart(210, SCROLL_SPEED);
+        pipe2.onRestart(pipe1.getTailX() + PIPE_GAP, SCROLL_SPEED);
+        pipe3.onRestart(pipe2.getTailX() + PIPE_GAP, SCROLL_SPEED);
     }
 
 }

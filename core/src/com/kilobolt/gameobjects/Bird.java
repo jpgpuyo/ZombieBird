@@ -12,7 +12,9 @@ public class Bird {
 
     private float rotation;
     private int width;
-    private int height;
+    private float height;
+
+    private float originalY;
 
     private boolean isAlive;
 
@@ -21,6 +23,7 @@ public class Bird {
     public Bird(float x, float y, int width, int height) {
         this.width = width;
         this.height = height;
+        this.originalY = y;
         position = new Vector2(x, y);
         velocity = new Vector2(0, 0);
         acceleration = new Vector2(0, 460);
@@ -34,6 +37,12 @@ public class Bird {
 
         if (velocity.y > 200) {
             velocity.y = 200;
+        }
+
+        // CEILING CHECK
+        if (position.y < -13) {
+            position.y = -13;
+            velocity.y = 0;
         }
 
         position.add(velocity.cpy().scl(delta));
@@ -60,6 +69,10 @@ public class Bird {
 
         }
 
+    }
+
+    public void updateReady(float runTime) {
+        position.y = 2 * (float) Math.sin(7 * runTime) + originalY;
     }
 
     public boolean isFalling() {
@@ -123,4 +136,5 @@ public class Bird {
     public boolean isAlive() {
         return isAlive;
     }
+
 }
